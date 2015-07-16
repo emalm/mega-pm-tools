@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+read mailing_list subject
+
+query_param=$(echo $subject | tr ' ' +)
+
+case "${mailing_list}" in
+	'[cf-bosh]' )
+		search_url="http://cf-bosh.70367.x6.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=${query_param}"
+		;;
+	'[cf-dev]' )
+		search_url="http://cf-dev.70369.x6.nabble.com/template/NamlServlet.jtp?macro=search_page&node=1&query=${query_param}"
+		;;
+esac
+
+curl -s "https://www.pivotaltracker.com/services/v5/projects/${MEGA_PROJECT_ID}/stories" \
+	-X POST \
+	-H "X-TrackerToken: ${TRACKER_API_TOKEN}" \
+	-H "Content-Type: application/json" \
+	-d "{
+			\"name\":\"${mailing_list} ${subject}\",
+			\"description\":\"${search_url}\",
+			\"story_type\":\"bug\",
+			\"requested_by_id\":${MEGA_PM_ID},
+			\"labels\":[\"issue\"]
+		}" 
