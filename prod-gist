@@ -1,0 +1,55 @@
+#!/bin/bash
+
+set -e -x
+
+last_version=$1
+last_tag=v${last_version}
+next_tag=v$(($last_version + 1))
+gist_path=${TMPDIR}/${last_tag}-gist
+
+pushd ~/workspace/cf-release
+	git fetch origin
+	
+	last_tag_sha=$(git show-ref ${last_tag} -s)
+	rc_sha=$(git show-ref origin/release-candidate -s)
+	
+	echo "Release Candidate SHA: ${rc_sha}" > ${gist_path}
+	echo "" >> ${gist_path}
+
+	echo "Job Spec Diffs:" >> ${gist_path}
+	git diff ${last_tag_sha}..${rc_sha} -- jobs/*/spec >> ${gist_path}
+	echo "" >> ${gist_path}
+
+	echo "Manifest Templates Diffs:" >> ${gist_path}
+	git diff ${last_tag_sha}..${rc_sha} -- templates >> ${gist_path}
+	echo "" >> ${gist_path}
+popd
+
+pushd ~/workspace/deployments-runtime/a1/stubs/cf
+	dr_sha_for_rc= # TODO
+	dr_sha_for_last_tag= # TODO
+
+	echo "Stub Diffs:" >> ${gist_path}
+	git diff ${dr_sha_for_last_tag}..${dr_sha_for_rc} -- cf-stub.yml >> ${gist_path}
+popd
+
+gist_url=$(curl "https://api.github.com/gists?access_token=${GH_ACCESS_TOKEN}" \
+	-X POST	\
+	-d "{
+			\"description\": \"Diff from ${last_tag} to ${rc_sha}\",
+			\"public\": false,
+			\"files\": {
+				\"${last_tag}-to-${rc_sha}.diff\": {
+					\"content\": $(cat $gist_path | jq -s -R .)
+				}
+			}
+		}" | jq -r .html_url)
+
+issue_number=$(curl "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues?access_token=${GH_ACCESS_TOKEN}" \
+	| jq "map(select(.title == $(echo $next_tag | jq -R .)))[0].number")
+
+curl "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues/${issue_number}/comments?access_token=${GH_ACCESS_TOKEN}" \
+	-X POST	\
+	-d "{
+			\"body\": \"${gist_url}\"
+		}"
