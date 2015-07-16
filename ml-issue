@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 read mailing_list subject
 
 query_param=$(echo $subject | tr ' ' +)
