@@ -1,11 +1,11 @@
 #!/bin/bash
 
-set -e -x
+set -e
 
 last_version=$1
 last_tag=v${last_version}
-next_tag=v$(($last_version + 1))
-gist_path=${TMPDIR}/${last_tag}-gist
+next_tag=v$((${last_version} + 1))
+gist_path=/tmp/${last_tag}-gist
 
 pushd ~/workspace/cf-release
 	git fetch origin
@@ -17,7 +17,8 @@ pushd ~/workspace/cf-release
 	echo "" >> ${gist_path}
 
 	echo "Job Spec Diffs:" >> ${gist_path}
-	git diff ${last_tag_sha}..${rc_sha} -- jobs/*/spec >> ${gist_path}
+	for treeish in ${last_tag_sha} ${rc_sha}; do (git co ${treeish}; git submodule update --init --recursive; cat jobs/*/spec > /tmp/${treeish}-job-specs); done
+	diff /tmp/${last_tag_sha}-job-specs /tmp/${rc_sha}-job-specs >> ${gist_path} || true
 	echo "" >> ${gist_path}
 
 	echo "Manifest Templates Diffs:" >> ${gist_path}
@@ -25,7 +26,7 @@ pushd ~/workspace/cf-release
 	echo "" >> ${gist_path}
 popd
 
-gist_url=$(curl "https://api.github.com/gists?access_token=${GH_ACCESS_TOKEN}" \
+gist_url=$(curl -s "https://api.github.com/gists?access_token=${GH_ACCESS_TOKEN}" \
 	-X POST	\
 	-d "{
 			\"description\": \"Diff from ${last_tag} to ${rc_sha}\",
@@ -37,11 +38,34 @@ gist_url=$(curl "https://api.github.com/gists?access_token=${GH_ACCESS_TOKEN}" \
 			}
 		}" | jq -r .html_url)
 
-issue_number=$(curl "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues?access_token=${GH_ACCESS_TOKEN}" \
+issue_number=$(curl -s "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues?access_token=${GH_ACCESS_TOKEN}" \
 	| jq "map(select(.title == $(echo $next_tag | jq -R .)))[0].number")
+comment_body=$(cat <<END
+cf-release Release Candidate SHA for ${next_tag} Deploy:
+[${rc_sha}](https://github.com/cloudfoundry/cf-release/commit/${rc_sha})
+
+Details:
+${gist_url}
+
+@shalako:
+Does this cf-release SHA look good for the routing team?
+
+@erikjasiak:
+Does this cf-release SHA look good for the LAMB team? Do the a1 logging metrics look nominal?
+
+@dieucao:
+Does this cf-release SHA look good for the CAPI team?
+
+@ematpl:
+Can you provide a compatible diego-release SHA?
+
+Known Diego Compatibility Records:
+\`\`\`
+DATE,RELEASE_STAGE,CF_RELEASE_COMMIT_SHA,DIEGO_RELEASE_COMMIT_SHA
+$(curl -s https://raw.githubusercontent.com/cloudfoundry-incubator/diego-cf-compatibility/master/compatibility-v1.csv | grep release_candidate | grep $(echo $rc_sha | cut -c 1-8) | cut -d, -f 1,2,4,7)
+\`\`\`
+END)
 
 curl "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues/${issue_number}/comments?access_token=${GH_ACCESS_TOKEN}" \
 	-X POST	\
-	-d "{
-			\"body\": \"${gist_url}\"
-		}"
+	-d "{\"body\": $(echo "$comment_body" | jq -s -R .)}"
