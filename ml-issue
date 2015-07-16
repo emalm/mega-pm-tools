@@ -2,7 +2,7 @@
 
 read mailing_list subject
 
-query_param=$(echo $subject | tr ' ' +)
+query_param=$(echo $subject | tr ' ' + | sed 's/[^a-zA-Z0-9_\.\+\-]//g')
 
 case "${mailing_list}" in
 	'[cf-bosh]' )
@@ -22,5 +22,6 @@ curl -s "https://www.pivotaltracker.com/services/v5/projects/${MEGA_PROJECT_ID}/
 			\"description\":\"${search_url}\",
 			\"story_type\":\"bug\",
 			\"requested_by_id\":${MEGA_PM_ID},
-			\"labels\":[\"issue\"]
+			\"labels\":[\"issue\"],
+			\"after_id\":76480324
 		}" 
