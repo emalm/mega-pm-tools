@@ -25,14 +25,6 @@ pushd ~/workspace/cf-release
 	echo "" >> ${gist_path}
 popd
 
-pushd ~/workspace/deployments-runtime/a1/stubs/cf
-	dr_sha_for_rc= # TODO
-	dr_sha_for_last_tag= # TODO
-
-	echo "Stub Diffs:" >> ${gist_path}
-	git diff ${dr_sha_for_last_tag}..${dr_sha_for_rc} -- cf-stub.yml >> ${gist_path}
-popd
-
 gist_url=$(curl "https://api.github.com/gists?access_token=${GH_ACCESS_TOKEN}" \
 	-X POST	\
 	-d "{
