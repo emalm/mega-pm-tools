@@ -13,10 +13,14 @@ You will need to have the following environment variables exported:
 - `MEGA_PROJECT_ID`
 - `MEGA_PM_ID`
 
-## Recommend a Release Candidate SHA of cf-release for Cloud Ops
+## Release Candidate SHA of cf-release for Cloud Ops
 
 If the previous Cloud Ops deployment of cf-release was, say, 213, then you can use the `prod-gist` script to generate a Gist with a release candidate SHA from the `release-candidate` branch, as well as a diff of all the job spec and manifest template changes.  The script will also comment on Cloud Ops' deploy checklist with a link to the Gist, along with some other data and @-mentions of other PMs involved:
 
 ```
 ./prod-gist 213
 ```
+
+## PM Workstation Setup
+
+`ws-setup.md` has everything you need to know to set up your machine.  Don't bother with chef, sprout, etc.
