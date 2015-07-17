@@ -1,5 +1,7 @@
 # mega-pm-tools
 
+Here are some scripts and README's to automate and simplify the work of a Cloud Foundry/the MEGA team PM.  For extra ease of use, install `direnv` (see `ws-setup.md`) and add an `.envrc` file to this directory with the approriate environment variables exported.
+
 ## Mailing List Tracker Issue
 
 If an email from the cf-dev or cf-bosh mailing list appears in your inbox and you think it's relevant to your team, copy the email subject (e.g. \[cf-dev\] I can haz cloud?) and then paste it and pipe it to the `ml-issue` script:
@@ -20,6 +22,9 @@ If the previous Cloud Ops deployment of cf-release was, say, 213, then you can u
 ```
 ./prod-gist 213
 ```
+
+You will need to have the following environment variable exported:
+- `GH_ACCESS_TOKEN`
 
 ## PM Workstation Setup
 
