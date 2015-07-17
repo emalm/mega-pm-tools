@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Usage: 
+# $ ./prod-gist 213
+
 set -e
 
 last_version=$1
