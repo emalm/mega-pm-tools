@@ -1,0 +1,31 @@
+platform: linux
+
+image: docker:///concourse/busyboxplus#git
+
+inputs:
+  - name: cf-github-release
+
+params:
+  TRACKER_PM_ID: ~
+  TRACKER_PROJECT_ID: ~
+  TRACKER_API_TOKEN: ~
+
+run:
+  path: sh
+  args:
+    - "-c"
+    - |
+      curl -s -f "https://www.pivotaltracker.com/services/v5/projects/${TRACKER_PROJECT_ID}/stories" \
+        -X POST \
+        -H "X-TrackerToken: ${TRACKER_API_TOKEN}" \
+        -H "Content-Type: application/json" \
+        -d "{
+              \"name\":\"Write $(cat cf-github-release/tag) release notes\",
+              \"labels\":[\"community-outreach\"],
+              \"story_type\":\"feature\",
+              \"requested_by_id\":${TRACKER_PM_ID},
+              \"current_state\":\"started\",
+              \"estimate\":1,
+              \"owner_ids\":[${TRACKER_PM_ID}],
+              \"description\":\"https://github.com/cloudfoundry/cf-release/releases/tag/$(cat cf-github-release/tag)\"
+           }"

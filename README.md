@@ -26,6 +26,10 @@ If the previous Cloud Ops deployment of cf-release was, say, 213, then you can u
 You will need to have the following environment variable exported:
 - `GH_ACCESS_TOKEN`
 
+## Release Notes Tracker Story
+
+When Cloud Ops creates a Github release on cf-release, a Concourse job can automatically create a Tracker story in the MEGA backlog assigned to the PM to write release notes.  `rel-notes.yml` provides a task configuration which consumes the cf-release Github release resource and creates the Tracker story.
+
 ## PM Workstation Setup
 
 `ws-setup.md` has everything you need to know to set up your machine.  Don't bother with chef, sprout, etc.
