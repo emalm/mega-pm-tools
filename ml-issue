@@ -1,4 +1,6 @@
 #!/bin/bash
+# Usage: copy mailing list subject to paste buffer, e.g. [cf-dev] I can haz cloud?
+# $ pbpaste | ./ml-issue
 
 read mailing_list subject
 
