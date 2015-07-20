@@ -50,16 +50,22 @@ cf-release Release Candidate SHA for ${next_tag} Deploy:
 Details:
 ${gist_url}
 
-@shalako:
+@loganlee:
+A new build of cf-release is available for Pivotal Web Services to consume, please take a look.
+
+@shalakoi, @crhino:
 Does this cf-release SHA look good for the routing team?
 
-@erikjasiak:
+@erikjasiak, @roxtar:
 Does this cf-release SHA look good for the LAMB team? Do the a1 logging metrics look nominal?
 
-@dieucao:
+@dieucao, @zrob:
 Does this cf-release SHA look good for the CAPI team?
 
-@ematpl:
+@khwang1, @ccwu-at-pivotal, @XenoPhex:
+Are there any known issues integrating PWS components against this SHA of cf-release?
+
+@ematpl, @luan:
 Can you provide a compatible diego-release SHA?
 
 Known Diego Compatibility Records:
