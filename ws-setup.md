@@ -75,9 +75,12 @@ alias forex='for x in `ls ~/workspace`; do (echo $x; cd ~/workspace/$x; git st);
 	email = <YOUR EMAIL HERE>
 [push]
 	default = simple
+[url "git@github.com:"]
+	pushInsteadOf = "https://github.com/"
 [alias]
 	plog = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 	st = status
 	co = checkout
 	ci = commit
+	ps = push --recurse-submodules=check
 ```
