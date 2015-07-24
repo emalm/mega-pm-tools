@@ -21,6 +21,7 @@
 * homebrew
 * git bash completions
 * fly (from concourse CI)
+* veritas
 
 ### Programs from `brew`
 * `brew install ruby-install`
@@ -33,6 +34,9 @@
 * `brew install go`
 * `brew install postgresql`
 * `brew install mysql`
+* `brew install dos2unix`
+* `brew install tree`
+* `brew install ncdu`
 
 ### `~/.bash_profile`
 ```
@@ -56,6 +60,10 @@ eval "$(direnv hook bash)"
 
 ## WORKSPACE ##
 alias forex='for x in `ls ~/workspace`; do (echo $x; cd ~/workspace/$x; git st); done'
+
+## EDITOR ##
+export EDITOR=subl
+export GIT_EDITOR=vim
 
 [[ -s ~/.bashrc ]] && source ~/.bashrc
 ```
