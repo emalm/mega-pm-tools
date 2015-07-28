@@ -51,7 +51,7 @@ Details:
 ${gist_url}
 
 @loganlee:
-A new build of cf-release is available for Pivotal Web Services to consume, please take a look.
+A new build of cf-release is available for Pivotal Web Services to consume, please take a look. /cc @ryanpei, you may be interested as well.
 
 @jpalermo:
 Do we have confidence in this SHA?
@@ -60,13 +60,16 @@ Do we have confidence in this SHA?
 Is CloudOps able to do a deploy if nobody objects to the SHA?
 
 @shalako, @crhino:
-Does this cf-release SHA look good for the routing team?
+Does this cf-release SHA look good for the routing team?  Any bugs, regressions, or incomplete features of concern?
+
+@sreetummidi, @mbhave:
+Does this cf-release SHA look good for the identity team?  Any bugs, regressions, or incomplete features of concern?
 
 @erikjasiak, @roxtar:
-Does this cf-release SHA look good for the LAMB team? Do the a1 logging metrics look nominal?
+Does this cf-release SHA look good for the LAMB team? Do the a1 logging metrics look nominal?  Any bugs, regressions, or incomplete features of concern?
 
 @dieucao, @zrob:
-Does this cf-release SHA look good for the CAPI team?
+Does this cf-release SHA look good for the CAPI team?  Any bugs, regressions, or incomplete features of concern?
 
 @khwang1, @ccwu-at-pivotal, @XenoPhex:
 Are there any known issues integrating PWS components against this SHA of cf-release?
