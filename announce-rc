@@ -35,7 +35,7 @@ cd cf-release-repo-develop
 	echo "" >> ${gist_path}
 cd ..
 
-gist_url=$(curl -s "https://api.github.com/gists?access_token=${GH_ACCESS_TOKEN}" \
+gist_url=$(curl -s -f "https://api.github.com/gists?access_token=${GH_ACCESS_TOKEN}" \
 	-X POST	\
 	-d "{
 			\"description\": \"Diff from ${last_tag} to ${rc_sha}\",
@@ -47,7 +47,7 @@ gist_url=$(curl -s "https://api.github.com/gists?access_token=${GH_ACCESS_TOKEN}
 			}
 		}" | jq -r .html_url)
 
-issue_number=$(curl -s "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues?access_token=${GH_ACCESS_TOKEN}" \
+issue_number=$(curl -s -f "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues?access_token=${GH_ACCESS_TOKEN}" \
 	| jq "map(select(.title == $(echo $issue_title | jq -R .)))[0].number")
 comment_body="cf-release Release Candidate SHA for ${next_tag} Deploy:
 [${rc_sha}](https://github.com/cloudfoundry/cf-release/commit/${rc_sha})
@@ -85,10 +85,10 @@ Can you provide a compatible diego-release SHA?
 Known Diego Compatibility Records:
 \`\`\`
 DATE,RELEASE_STAGE,CF_RELEASE_COMMIT_SHA,DIEGO_RELEASE_COMMIT_SHA
-$(curl -s https://raw.githubusercontent.com/cloudfoundry-incubator/diego-cf-compatibility/master/compatibility-v1.csv | grep release_candidate | grep $(echo $rc_sha | cut -c 1-8) | cut -d, -f 1,2,4,7)
+$(curl -s -f https://raw.githubusercontent.com/cloudfoundry-incubator/diego-cf-compatibility/master/compatibility-v1.csv | grep release_candidate | grep $(echo $rc_sha | cut -c 1-8) | cut -d, -f 1,2,4,7)
 \`\`\`
 "
 
-curl "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues/${issue_number}/comments?access_token=${GH_ACCESS_TOKEN}" \
+curl -f "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues/${issue_number}/comments?access_token=${GH_ACCESS_TOKEN}" \
 	-X POST	\
 	-d "{\"body\": $(echo "$comment_body" | jq -s -R .)}"
