@@ -1,4 +1,4 @@
-set -e
+set -e -x
 
 last_version=$(cat cf-github-release/version)
 last_tag=$(cat cf-github-release/tag)
@@ -17,7 +17,7 @@ cd cf-release-repo-develop
 	echo "Job Spec Diffs:" >> ${gist_path}
 	for treeish in ${last_tag_sha} ${rc_sha}
 	do
-		git co ${treeish}
+		git checkout ${treeish}
 		git submodule update --init --recursive
 		cat jobs/*/spec > /tmp/${treeish}-job-specs
 	done
