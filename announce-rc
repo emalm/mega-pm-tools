@@ -3,6 +3,7 @@ set -e -x
 last_version=$(cat cf-github-release/version)
 last_tag=$(cat cf-github-release/tag)
 next_tag=v$((${last_version} + 1))
+issue_title="CF ${next_tag}"
 gist_path=/tmp/gist
 
 cd cf-release-repo-develop
@@ -42,7 +43,7 @@ gist_url=$(curl -s "https://api.github.com/gists?access_token=${GH_ACCESS_TOKEN}
 		}" | jq -r .html_url)
 
 issue_number=$(curl -s "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues?access_token=${GH_ACCESS_TOKEN}" \
-	| jq "map(select(.title == $(echo $next_tag | jq -R .)))[0].number")
+	| jq "map(select(.title == $(echo $issue_title | jq -R .)))[0].number")
 comment_body=$(cat <<END
 cf-release Release Candidate SHA for ${next_tag} Deploy:
 [${rc_sha}](https://github.com/cloudfoundry/cf-release/commit/${rc_sha})
