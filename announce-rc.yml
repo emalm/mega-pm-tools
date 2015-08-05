@@ -14,5 +14,4 @@ params:
 run:
   path: /bin/sh
   args:
-    - "-c"
-    - "./mega-pm-tools/announce-rc"
+    - "mega-pm-tools/announce-rc"
