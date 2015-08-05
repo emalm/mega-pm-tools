@@ -12,6 +12,11 @@ cd cf-release-repo-develop
 	last_tag_sha=$(git show-ref ${last_tag} -s)
 	rc_sha=$(git show-ref origin/release-candidate -s)
 
+	if [ $(git rev-list ${last_tag_sha}..${rc_sha} | wc -l) -eq 0 ]; then
+		echo "ABORT: This release candidate has no new changes."
+		exit 1
+	fi
+
 	echo "Release Candidate SHA: ${rc_sha}" > ${gist_path}
 	echo "" >> ${gist_path}
 
@@ -41,6 +46,8 @@ gist_url=$(curl -s "https://api.github.com/gists?access_token=${GH_ACCESS_TOKEN}
 				}
 			}
 		}" | jq -r .html_url)
+
+exit 0
 
 issue_number=$(curl -s "https://api.github.com/repos/pivotal-cf/runtime-checklists/issues?access_token=${GH_ACCESS_TOKEN}" \
 	| jq "map(select(.title == $(echo $issue_title | jq -R .)))[0].number")
