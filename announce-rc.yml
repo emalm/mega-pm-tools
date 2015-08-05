@@ -1,0 +1,18 @@
+platform: linux
+
+# git, curl, jq
+image: docker:///concourse/git-resource
+
+inputs:
+  - name: cf-github-release
+  - name: cf-release-repo
+  - name: mega-pm-tools
+
+params:
+  GH_ACCESS_TOKEN: ~
+
+run:
+  path: /bin/bash
+  args:
+    - "-c"
+    - "./mega-pm-tools/announce-rc"

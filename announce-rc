@@ -1,26 +1,28 @@
 #!/bin/bash
 
-# Usage: 
-# $ ./prod-gist 213
-
 set -e
 
-last_version=$1
-last_tag=v${last_version}
+last_version=$(cat cf-github-release/version)
+last_tag=$(cat cf-github-release/tag)
 next_tag=v$((${last_version} + 1))
-gist_path=/tmp/${last_tag}-gist
+gist_path=/tmp/gist
 
-pushd ~/workspace/cf-release
+pushd cf-release-repo-develop
 	git fetch origin
-	
+
 	last_tag_sha=$(git show-ref ${last_tag} -s)
 	rc_sha=$(git show-ref origin/release-candidate -s)
-	
+
 	echo "Release Candidate SHA: ${rc_sha}" > ${gist_path}
 	echo "" >> ${gist_path}
 
 	echo "Job Spec Diffs:" >> ${gist_path}
-	for treeish in ${last_tag_sha} ${rc_sha}; do (git co ${treeish}; git submodule update --init --recursive; cat jobs/*/spec > /tmp/${treeish}-job-specs); done
+	for treeish in ${last_tag_sha} ${rc_sha}
+	do
+		git co ${treeish}
+		git submodule update --init --recursive
+		cat jobs/*/spec > /tmp/${treeish}-job-specs
+	done
 	diff /tmp/${last_tag_sha}-job-specs /tmp/${rc_sha}-job-specs >> ${gist_path} || true
 	echo "" >> ${gist_path}
 
