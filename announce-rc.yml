@@ -12,7 +12,7 @@ params:
   GH_ACCESS_TOKEN: ~
 
 run:
-  path: /bin/bash
+  path: /bin/sh
   args:
     - "-c"
     - "./mega-pm-tools/announce-rc"
