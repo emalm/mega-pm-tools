@@ -1,0 +1,28 @@
+set -e -x
+
+release_version=v$(cat cf-final-bosh-release/version)
+
+bp=1042066 # Buildpacks and Stacks
+capi=966314 # CAPI
+ops=1011254 # CloudOps
+diego=1003146 # Diego
+id=997278 # Identity
+jbp=788065 # Java Buildpack
+lamb=993188 # LAMB
+mega=1382120 # MEGA
+rtg=1358110 # Routing
+
+for tracker_project_id in $bp $capi $ops $diego $id $jbp $lamb $mega $rtg ; do
+	curl -s -f "https://www.pivotaltracker.com/services/v5/projects/${tracker_project_id}/stories" \
+		-X POST \
+		-H "X-TrackerToken: ${TRACKER_API_TOKEN}" \
+		-H "Content-Type: application/json" \
+		-d "{
+			\"name\":\"Contribute to cf-release ${release_version} GitHub release notes\",
+			\"story_type\":\"feature\",
+			\"requested_by_id\":${MEGA_PM_ID},
+			\"estimate\":1,
+			\"description\":\"https://github.com/cloudfoundry/cf-release/releases/tag/${release_version}\"
+		}" &
+done
+wait

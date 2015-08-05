@@ -4,14 +4,14 @@ platform: linux
 image: docker:///concourse/git-resource
 
 inputs:
-  - name: cf-github-release
-  - name: cf-release-repo-develop
+  - name: cf-final-bosh-release
   - name: mega-pm-tools
 
 params:
-  GH_ACCESS_TOKEN: ~
+  TRACKER_API_TOKEN: ~
+  MEGA_PM_ID: ~
 
 run:
   path: /bin/sh
   args:
-    - mega-pm-tools/announce-rc
+    - mega-pm-tools/request-pm-input
