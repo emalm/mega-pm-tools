@@ -24,19 +24,11 @@
 * veritas
 
 ### Programs from `brew`
-* `brew install ruby-install`
-	* and then `ruby-install ruby x.x.x`
-* `brew install caskroom/cask/brew-cask`
-	* and then `brew cask install fluid` and use it to make Tracker app
-* `brew install direnv`
-* `brew install jq`
-* `brew install wget`
-* `brew install go`
-* `brew install postgresql`
-* `brew install mysql`
-* `brew install dos2unix`
-* `brew install tree`
-* `brew install ncdu`
+* `brew install awscli caskroom/cask/brew-cask direnv dos2unix fluid gdbm \
+				go htop-osx jq libffi libyaml mysql ncdu openssl postgresql \
+				readline ruby-install tree watch wget`
+* With `ruby-install` you can then `ruby-install ruby x.x.x`
+* With `fluid` you can then make the Tracker app
 
 ### `~/.bash_profile`
 ```
