@@ -12,7 +12,7 @@ cd cf-release-repo-develop
 	last_tag_sha=$(git show-ref ${last_tag} -s)
 	rc_sha=$(git show-ref origin/release-candidate -s)
 
-	if [ $(git rev-list ${last_tag_sha}..${rc_sha} | wc -l) -eq 0 ]; then
+	if git merge-base --is-ancestor ${last_tag_sha} ${rc_sha}; then
 		echo "ABORT: This release candidate has no new changes."
 		exit 1
 	fi
