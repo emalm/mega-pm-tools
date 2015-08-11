@@ -12,9 +12,9 @@ lamb=993188 # LAMB
 mega=1382120 # MEGA
 rtg=1358110 # Routing
 
-echo "Creating tracker stories in multiple projects"
-set +x
-	for tracker_project_id in $bp $capi $ops $diego $id $jbp $lamb $mega $rtg ; do
+for tracker_project_id in $bp $capi $ops $diego $id $jbp $lamb $mega $rtg ; do
+	echo "Creating story for project:" $tracker_project_id
+	set +x
 		curl -s -f "https://www.pivotaltracker.com/services/v5/projects/${tracker_project_id}/stories" \
 			-X POST \
 			-H "X-TrackerToken: ${TRACKER_API_TOKEN}" \
@@ -25,8 +25,7 @@ set +x
 				\"requested_by_id\":${MEGA_PM_ID},
 				\"estimate\":1,
 				\"description\":\"https://github.com/cloudfoundry/cf-release/releases/tag/${release_version}\"
-			}" &
-	done
-	wait
-set -x
-echo "Finished creating tracker stories in multiple projects (note: some may have failed)"
+			}"
+	set -x
+	echo "Succeeded creating tracker story for project:" $tracker_project_id
+done
