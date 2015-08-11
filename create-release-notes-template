@@ -44,11 +44,15 @@ These are soft recommendations; several different versions of the BOSH release a
 This is a soft recommendation; several different versions of the Diego release may work fine with this version of cf-release.
 "
 
-curl -f "https://api.github.com/repos/cloudfoundry/cf-release/releases?access_token=${GH_ACCESS_TOKEN}" \
-	-X POST	\
-	-d "{
-		\"tag_name\": \"${tag}\",
-		\"target_commitish\": \"${tag}\",
-		\"name\": \"${tag}\",
-		\"body\": $(echo "$release_notes_body" | jq -s -R .)
-	   }"
+echo "Creating release notes"
+set +x
+	curl -f "https://api.github.com/repos/cloudfoundry/cf-release/releases?access_token=${GH_ACCESS_TOKEN}" \
+		-X POST	\
+		-d "{
+			\"tag_name\": \"${tag}\",
+			\"target_commitish\": \"${tag}\",
+			\"name\": \"${tag}\",
+			\"body\": $(echo "$release_notes_body" | jq -s -R .)
+		   }"
+set -x
+echo "Succeeded creating release notes"
