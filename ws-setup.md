@@ -24,14 +24,12 @@
 * veritas
 
 ### Programs from `brew`
-* `brew install awscli caskroom/cask/brew-cask direnv dos2unix fluid gdbm \
-				go htop-osx jq libffi libyaml mysql ncdu openssl postgresql \
-				readline ruby-install tree watch wget`
+* `brew install awscli caskroom/cask/brew-cask direnv dos2unix fluid gdbm go htop-osx jq libffi libyaml mysql ncdu openssl postgresql readline ruby-install tree watch wget`
 * With `ruby-install` you can then `ruby-install ruby x.x.x`
 * With `fluid` you can then make the Tracker app
 
 ### `~/.bash_profile`
-```
+```bash
 ## GOLANG ##
 export GOPATH=~/.gopaths/go-1.4.2
 export PATH=$GOPATH/bin/:$PATH
@@ -62,8 +60,8 @@ export GIT_EDITOR=vim
 
 ### Ruby Gems
 * `gem install bundler`
-* `echo "source 'https://rubygems.org'; gem 'bosh_cli'" > ~/.bosh.Gemfile && BUNDLE_GEMFILE=~/.bosh.Gemfile bundle`
 * `echo "gem: --no-document" > ~/.gemrc`
+* `echo "source 'https://rubygems.org'; gem 'bosh_cli'" > ~/.bosh.Gemfile && BUNDLE_GEMFILE=~/.bosh.Gemfile bundle`
 
 ### SSH
 * add work key to `~/.ssh` and `ssh-add` it to the keychain
