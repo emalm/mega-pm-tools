@@ -1,0 +1,17 @@
+platform: linux
+
+# git, curl, jq
+image: docker:///concourse/git-resource
+
+inputs:
+  - name: cf-final-bosh-release
+  - name: mega-pm-tools
+
+params:
+  TRACKER_API_TOKEN: ~
+  MEGA_PM_ID: ~
+
+run:
+  path: /bin/sh
+  args:
+    - mega-pm-tools/request-pws-status-update
