@@ -86,7 +86,7 @@ ${gist_url}
 - [ ] Does this cf-release SHA look good for the CAPI team?  Any bugs, regressions, or incomplete features of concern?
 
 @khwang1, @ccwu-at-pivotal, @XenoPhex:
-- [ ] Are there any known issues integrating PWS components against this SHA of cf-release?
+- [ ] Are there any known issues integrating BAM components against this SHA of cf-release?
 
 @ematpl, @luan:
 - [ ] Can you provide a compatible diego-release SHA?
