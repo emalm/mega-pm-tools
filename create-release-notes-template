@@ -50,7 +50,6 @@ set +x
 		-X POST	\
 		-d "{
 			\"tag_name\": \"${tag}\",
-			\"target_commitish\": \"${tag}\",
 			\"name\": \"${tag}\",
 			\"body\": $(echo "$release_notes_body" | jq -s -R .)
 		   }"
