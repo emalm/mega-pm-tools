@@ -13,6 +13,7 @@ release_notes_body="The cf-release ${tag} was released on $(date +'%B %d, %Y').
 * <a href='#job-spec-changes'>Job Spec Changes</a>
 * <a href='#recommended-bosh-release-and-stemcell-versions'>Recommended BOSH Release and Stemcell Versions</a>
 * <a href='#recommended-diego-version'>Recommended Diego Version</a>
+* <a href='#recommended-garden-linux-version'>Recommended Garden Linux Version</a>
 
 ## <a name='cc-and-service-broker-apis'></a>CC and Service Broker APIs
 
@@ -39,9 +40,15 @@ These are soft recommendations; several different versions of the BOSH release a
 
 ## <a name='recommended-diego-version'></a>Recommended Diego Version
 
-* Diego Release Version:
+* diego-release Version:
 
-This is a soft recommendation; several different versions of the Diego release may work fine with this version of cf-release.
+This is a soft recommendation; several different versions of the diego-release may work fine with this version of cf-release.
+
+## <a name='recommended-garden-linux-version'></a>Recommended Garden Linux Version
+
+* garden-linux Release Version:
+
+This is a soft recommendation; several different versions of the garden-linux release may work fine with this version of cf-release and the aforementioned version of diego-release.
 "
 
 echo "Creating release notes"
