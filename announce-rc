@@ -85,7 +85,7 @@ ${gist_url}
 @dieucao, @zrob:
 - [ ] Does this cf-release SHA look good for the CAPI team?  Any bugs, regressions, or incomplete features of concern?
 
-@flavorjones, @mhoran:
+@flavorjones, @jtarchie:
 - [ ] Does this cf-release SHA look good for the Buildpacks and Stacks team?  Any bugs, regressions, or incomplete features of concern?
 
 @nebhale, @cgfrost:
