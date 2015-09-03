@@ -70,7 +70,7 @@ ${gist_url}
 @jpalermo:
 - [ ] Do we have confidence in this SHA?
 
-@thansmann, @syslxg:
+@thansmann, @vkelkar-pivotal, @jim80net:
 - [ ] Is CloudOps able to do a deploy if nobody objects to the SHA?
 
 @shalako, @crhino:
