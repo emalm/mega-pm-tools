@@ -17,4 +17,4 @@ curl -s "https://www.pivotaltracker.com/services/v5/projects/1382120/stories" \
 		\"description\":\"${search_url}\",
 		\"story_type\":\"bug\",
 		\"labels\":[\"issue\"]
-	   }"
+	   }" | jq .
