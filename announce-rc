@@ -91,7 +91,7 @@ ${gist_url}
 @nebhale, @cgfrost:
 - [ ] Does this cf-release SHA look good for the Java Buildpack team?  Any bugs, regressions, or incomplete features of concern?
 
-@khwang1, @ccwu-at-pivotal, @XenoPhex:
+@khwang1, @ccwu-at-pivotal, @aauthor:
 - [ ] Are there any known issues integrating BAM components against this SHA of cf-release?
 
 @ematpl, @luan:
