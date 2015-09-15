@@ -99,8 +99,8 @@ ${gist_url}
 
 Known Diego Compatibility Records:
 \`\`\`
-DATE,RELEASE_STAGE,CF_RELEASE_COMMIT_SHA,DIEGO_RELEASE_COMMIT_SHA
-$(curl -s -f https://raw.githubusercontent.com/cloudfoundry-incubator/diego-cf-compatibility/master/compatibility-v1.csv | grep release_candidate | grep $(echo $rc_sha | cut -c 1-8) | cut -d, -f 1,2,4,7)
+DATE,RELEASE_STAGE,CF_RELEASE_COMMIT_SHA,DIEGO_RELEASE_VERSION,DIEGO_RELEASE_COMMIT_SHA
+$(curl -s -f https://raw.githubusercontent.com/cloudfoundry-incubator/diego-cf-compatibility/master/compatibility-v2.csv | grep release_candidate | grep $(echo $rc_sha | cut -c 1-8) | cut -d, -f 1,2,4,6,7)
 \`\`\`
 "
 
