@@ -5,7 +5,7 @@ shift
 subject=$@
 
 mlist=$(echo $mailing_list | sed 's/[][]//g')%40lists.cloudfoundry.org
-q=$(echo $subject | tr ' ' + | sed 's/[^a-zA-Z0-9_\.\+\-]//g')
+q=$(./urlencode "${subject}")
 search_url="https://lists.cloudfoundry.org/archives/search?mlist=${mlist}&q=${q}"
 
 curl -s "https://www.pivotaltracker.com/services/v5/projects/1382120/stories" \
